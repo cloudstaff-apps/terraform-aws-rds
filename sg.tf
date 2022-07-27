@@ -20,16 +20,16 @@ resource "aws_security_group_rule" "rds_db_inbound_cidrs" {
 }
 
 resource "aws_security_group_rule" "rds_db_inbound_from_sg" {
-  for_each                 = { for security_group_id in var.allow_security_group_ids : security_group_id.name => security_group_id }
+  count                    = length(var.allow_security_group_ids)
   type                     = "ingress"
   from_port                = var.port
   to_port                  = var.port
   protocol                 = "tcp"
-  source_security_group_id = each.value.security_group_id
+  source_security_group_id = var.allow_security_group_ids[count.index]
   security_group_id        = aws_security_group.rds_db.id
-  description              = try(each.value.description, "From ${each.value.security_group_id}")
+  description              = "Allow access"
 }
-
+  
 resource "aws_security_group_rule" "egress_rule" {
   type              = "egress"
   from_port         = 0
