@@ -10,6 +10,8 @@ resource "aws_rds_cluster" "aurora_cluster" {
   preferred_backup_window             = var.preferred_backup_window
   preferred_maintenance_window        = var.preferred_maintenance_window
   snapshot_identifier                 = var.snapshot_identifier != "" ? var.snapshot_identifier : null
+  skip_final_snapshot                 = var.skip_final_snapshot
+  final_snapshot_identifier           = var.final_snapshot_identifier == "" ? "${var.environment_name}-${var.name}-final-snapshot" : var.final_snapshot_identifier
   db_subnet_group_name                = try(aws_db_subnet_group.rds_subnet_group[0].id, var.db_subnet_group_id)
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   vpc_security_group_ids              = [aws_security_group.rds_db.id]
