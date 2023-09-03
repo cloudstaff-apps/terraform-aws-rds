@@ -120,12 +120,9 @@ resource "aws_iam_role" "rds_monitoring" {
 resource "aws_db_instance" "rds_replica" {
   count                  = var.db_type == "rds" && var.enable_replica ? 1 : 0
   identifier             = var.identifier == "" ? "${var.environment_name}-${var.name}-replica" : "${var.identifier}-replica"
-  engine                 = var.engine
-  engine_version         = var.engine_version
   instance_class         = var.instance_class_replica == null ? var.instance_class : var.instance_class_replica
   allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
-  username               = var.user
   password               = random_string.rds_db_password.result
   parameter_group_name   = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""
   skip_final_snapshot    = var.skip_final_snapshot
