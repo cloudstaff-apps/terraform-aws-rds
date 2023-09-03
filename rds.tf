@@ -123,7 +123,6 @@ resource "aws_db_instance" "rds_replica" {
   instance_class         = var.instance_class_replica == null ? var.instance_class : var.instance_class_replica
   allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
-  password               = random_string.rds_db_password.result
   parameter_group_name   = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""
   skip_final_snapshot    = var.skip_final_snapshot
   replicate_source_db    = aws_db_instance.rds_db[0].id

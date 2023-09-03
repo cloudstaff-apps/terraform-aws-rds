@@ -45,7 +45,7 @@ resource "aws_ssm_parameter" "rds_db_address" {
   value       = var.db_type == "rds" ? aws_db_instance.rds_db[0].address : aws_rds_cluster.aurora_cluster[0].endpoint
 }
 
-resource "aws_ssm_parameter" "rds_db_address" {
+resource "aws_ssm_parameter" "rds_db_reader_address" {
   count       = var.db_type == "rds" && var.enable_replica && var.secret_method == "ssm" ? 1 : 0
   name        = "/${var.environment_name}/${var.name}/rds/READER_HOST"
   description = "RDS Reader Hostname"
