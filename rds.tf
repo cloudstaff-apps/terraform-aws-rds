@@ -124,8 +124,7 @@ resource "aws_db_instance" "rds_replica" {
   allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
   parameter_group_name   = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""
-  skip_final_snapshot    = var.skip_final_snapshot
-  final_snapshot_identifier = var.final_snapshot_identifier == "" ? "${var.environment_name}-${var.name}-final-replica-snapshot" : "${var.final_snapshot_identifier}-replica"
+  skip_final_snapshot    = true
   replicate_source_db    = aws_db_instance.rds_db[0].id
   vpc_security_group_ids = [aws_security_group.rds_db.id]
   storage_encrypted      = var.storage_encrypted
