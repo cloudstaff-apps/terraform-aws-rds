@@ -121,6 +121,7 @@ resource "aws_db_instance" "rds_replica" {
   count                  = var.db_type == "rds" && var.enable_replica ? 1 : 0
   identifier             = var.identifier == "" ? "${var.environment_name}-${var.name}-replica" : "${var.identifier}-replica"
   instance_class         = var.instance_class_replica == null ? var.instance_class : var.instance_class_replica
+  performance_insights_enabled = var.replica_performance_insights_enabled
   allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
   parameter_group_name   = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""

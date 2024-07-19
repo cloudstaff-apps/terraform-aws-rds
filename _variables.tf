@@ -354,3 +354,9 @@ variable "instance_class_replica" {
   description = "Define instance class for read replica"
   default     = null
 }
+
+variable "replica_performance_insights_enabled" {
+  description = "Enable performance insights on Replica instance"
+  type        = bool
+  default     = false
+}
